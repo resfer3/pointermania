@@ -129,6 +129,47 @@ struct node* link_test(){
   wrong_push(head, 1);
 }*/
 
+/* 
+  Takes a list and a data value.
+  Creates a new link with the given data and pushes
+  it onto the front of the list.
+  The list is not passed in by its head pointer.
+  Instead the list is passed in as a "reference" pointer
+  to the head pointer -- this allows us to modify
+  the caller's memory.
+*/
+void push(struct node** head_ref, int data){
+  struct node* new_node = malloc(sizeof(struct node));
+
+  new_node->data = data;
+  new_node->next = *head_ref;
+  *head_ref = new_node;
+}
+
+struct node* push_test(){
+  int size = 0;
+  printf("get size: ");
+  scanf("%d", &size);
+  struct node* head = BuildOneTwoThree(size);
+  
+  push(&head, 1); // watch the &
+  push(&head, 13);
+  
+  return head;
+  // head now points to the list {13, 1, 2, 3}
+}
+
+struct node* push_test2(){
+  struct node* head = NULL;
+  push(&head, 1);
+  push(&head, 2);
+  push(&head, 3);
+
+  return head;
+  // head now points to the list {3, 2, 1}
+}
+
+
 void free_linked_list(struct node* list);
 
 int main(void){
@@ -146,9 +187,10 @@ int main(void){
 //    printf("%d ", node->data);
 //  }
 //  printf("\n");
-
   // link test - add node
-  struct node* head = link_test();
+  //struct node* head = link_test();
+  struct node* head = push_test2(); 
+  //wrong_push(head, data); test of broken function
   struct node* node;
   for (node = head; node != NULL; node = node->next){
   printf("%d ", node->data);
