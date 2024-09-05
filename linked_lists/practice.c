@@ -169,8 +169,43 @@ struct node* push_test2(){
   // head now points to the list {3, 2, 1}
 }
 
+struct node* add_at_head(){
+  struct node* head = NULL;
+  int i;
+
+  for (i = 0; i < 10; i++){
+    push(&head, i);
+  }
+
+  return head;
+}
+
+// Easier Implementation; Better push at the end of the linked list
+struct node* build_with_special_case(){
+  struct node* head = NULL;
+  struct node* tail;
+  int i;
+
+  // Deal with the head node here, and set the tail pointer;
+  push(&head, 1);
+  tail = head;
+
+  // Do all the other nodes using 'tail'
+  for (i = 2; i < 6; i++){
+    push(&(tail->next), i); // add node at tail->next
+    tail = tail->next;      // advance tail to point to last node
+  }
+
+  return head;
+
+}
+
+
+
+
 
 void free_linked_list(struct node* list);
+void print_list(struct node* head);
 
 int main(void){
 
@@ -189,13 +224,12 @@ int main(void){
 //  printf("\n");
   // link test - add node
   //struct node* head = link_test();
-  struct node* head = push_test2(); 
+  //struct node* head = add_at_head(); 
   //wrong_push(head, data); test of broken function
-  struct node* node;
-  for (node = head; node != NULL; node = node->next){
-  printf("%d ", node->data);
-  }
-  printf("\n");
+
+  struct node* head = build_with_special_case();
+
+  print_list(head);
 
   free_linked_list(head);
   printf("linked list freed\n");
@@ -208,6 +242,17 @@ int main(void){
 
   return 0;
 
+}
+
+// print list
+void print_list(struct node* head){
+  struct node* current = head;
+
+  while(current != NULL){
+    printf("%d ", current->data);
+    current = current->next;
+  }
+  printf("\n");
 }
 
 // linked list free
