@@ -91,6 +91,7 @@ struct node* BuildTwoThree(){
 
   return head;
 }
+// add a new node in front - link a new node
 struct node* link_test(){
   int size = 0;
   printf("get size: ");
@@ -106,16 +107,29 @@ struct node* link_test(){
   head = new_node;
   printf("head = newNode: %d\n", head->data);
   printf("head = newNode: %p\n", head);
-  
 
+  // get length
   int list_length = length(head);
   printf("list_length: %d\n", list_length);
-
+  
   return head;
 
 }
 
+/*void wrong_push(struct node* head, int data){
+  struct node* new_node = malloc(sizeof(struct node));
+  new_node->data = data;
+  new_node->next = head;
+  head = new_node;
+}*/
 
+/*void wrong_push_test(){
+  List head = BuildTwoThree();
+
+  wrong_push(head, 1);
+}*/
+
+void free_linked_list(struct node* list);
 
 int main(void){
 
@@ -140,6 +154,9 @@ int main(void){
   printf("%d ", node->data);
   }
   printf("\n");
+
+  free_linked_list(head);
+  printf("linked list freed\n");
   // count list
   //int list_length = length(head);
   //printf("list_length: %d\n", list_length);
@@ -150,3 +167,20 @@ int main(void){
   return 0;
 
 }
+
+// linked list free
+void free_linked_list(struct node* list){
+  struct node* temp;
+  struct node* current = list->next;
+
+  while (current != NULL){
+    temp = current->next;
+    free(current);
+    current = temp;
+  }
+  free(list);
+
+}
+
+
+
