@@ -1,6 +1,6 @@
 #!/bin/bash
 
-gcc -c -o practice3.o practice3.c
+gcc -c -o exercises.o exercises.c
 
 gcc -c -o basic.o lib/basic.c
 
