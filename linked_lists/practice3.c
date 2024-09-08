@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "basic.h"
-
-struct node* node;
+#include "lib/basic.h"
 
 struct node* create_list(){
   struct node* head = NULL;
@@ -11,7 +9,7 @@ struct node* create_list(){
   push(&head, 1);
   tail = head;
 
-  for (int i = 1; i < 5; i++){
+  for (int i = 2; i < 5; i++){
     push(&tail->next, i);
     tail = tail->next;
   }

@@ -2,7 +2,7 @@
 #define BASIC_H
 
 // basic structure for all problems
-struct node* node{
+struct node{
   int data;
   struct node* next;
 };

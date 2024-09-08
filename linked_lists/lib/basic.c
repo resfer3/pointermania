@@ -15,7 +15,7 @@ void print_list(struct node* head){
 
 int list_length(struct node* head){
   struct node* current = head;
-  int count++;
+  int count = 0;
 
   while (current != NULL){
     count++; 
