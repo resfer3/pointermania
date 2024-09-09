@@ -4,4 +4,4 @@ gcc -c -o exercises.o exercises.c
 
 gcc -c -o basic.o lib/basic.c
 
-gcc -o code practice3.o basic.o
+gcc -o code exercises.o basic.o

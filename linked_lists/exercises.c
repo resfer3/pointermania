@@ -6,22 +6,141 @@ struct node* create_list(){
   struct node* head = NULL;
   struct node* tail = NULL;
   
-  push(&head, 1);
+  int size;
+  int n;
+
+  // prompt for size 
+  printf("size of linked list: ");
+  scanf("%d", &size);
+
+  // prompt for each size
+  printf("list_element: ");
+  scanf("%d", &n);
+  push(&head, n);
   tail = head;
 
-  for (int i = 2; i <= 5; i++){
-    push(&tail->next, i);
+  for (int i = 1; i < size; i++){
+    printf("list_element: ");
+    scanf("%d", &n);
+    push(&tail->next, n);
     tail = tail->next;
   }
 
   return head;
 }
 
+
+int Count(struct node* head, int search_for); 
+int get_nth(struct node* head, int index);
+void delete_list(struct node** head_ref);
+int pop(struct node** head_ref);
+
+
+
 int main(int argc, char* argv[]){
   struct node* head = create_list(); 
   print_list(head);
   list_length(head);
+
+  // exercise 1 ; Count()
+  int count_func = Count(head, 3);
+  printf("count_func: %d\n", count_func);
+
+  // exercise 2 ; GetNth()
+  int last_node = get_nth(head, 2);
+  if (last_node == -1){
+    printf("index is invalid, outside 0, or length-1 exceeded\n"); 
+  }
+  printf("last node: %d\n", last_node);
+
+  // exercise 3 ; delete_list()
+  // checked with valgrind there's still 1 memory block not freed, meaning the head is NULL
+  /*delete_list(&head); 
+  if(head == NULL){
+    printf("print deleted succesfully\n");
+  }
+  */
+
+  // exercise 4 ; pop()
+  int pop_func = pop(&head); 
+  printf("pop_func: %d\n", pop_func);
+  print_list(head);
+  
+
+  // free
   link_free(head);
+  return 0;
 }
+
+int pop(struct node** head_ref){
+// allocate
+  struct node* current = (*head_ref)->next; 
+  int trunq = (*head_ref)->data;
+  
+// free head
+  free(*head_ref);
+// head->ref becomes head
+
+ // return truncated data
+ return trunq;
+
+
+}
+
+void delete_list(struct node** head_ref){
+  struct node* temp;
+  struct node* current = (*head_ref)->next;
+
+  while (current != NULL){
+    temp = current->next;
+    free(current);
+    current = temp;
+  }
+  *head_ref = NULL;
+}
+
+int get_nth(struct node* head, int index){
+  struct node* current = head; 
+  int idx_count;
+
+  while (current != NULL){
+    if (idx_count == index){
+      return current->data;
+    }
+    else {
+      idx_count++;
+      current = current->next;
+    }
+  }
+  return -1;
+}
+
+int Count(struct node* head, int search_for){
+  struct node* current = head;
+  int count = 0;
+
+  while (current != NULL){
+    if (current->data == search_for){
+      count++;
+    }
+    current = current->next;
+  }
+  return count;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
