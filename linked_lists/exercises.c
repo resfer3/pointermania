@@ -78,8 +78,8 @@ int main(int argc, char* argv[]){
 
   // exercise 5; insert_nth()
   struct node* list = NULL;
-  insert_nth(&list, 3, 13);
-  print_list(list);
+  insert_nth(&list, 0, 13);
+  //insert_nth(&list, 1, 42);
 
   // free
 //  link_free(head);
@@ -88,13 +88,31 @@ int main(int argc, char* argv[]){
 }
 
 void insert_nth(struct node** list_ref, int index, int data){
+  // allocate
   struct node* new_node = malloc(sizeof(struct node));
-
+  struct node* current = NULL;
+  
+  // create a list if no nodes
   if (*list_ref == NULL){
     new_node->data = data;
     new_node->next = *list_ref;
     *list_ref = new_node;
   }
+  current = *list_ref;
+  // loop when in index create node
+  int count = 0;
+  while (current != NULL){
+    if (index == count){
+      new_node->data = data;
+      new_node->next = current;
+      current = new_node;
+      break;
+    }
+    current = current->next;
+    count++;
+  }
+  printf("list_length: %d\n", list_length(*list_ref));
+  print_list(*list_ref);
 }
 
 int pop(struct node** head_ref){
