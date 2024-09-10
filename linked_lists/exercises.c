@@ -34,13 +34,13 @@ int Count(struct node* head, int search_for);
 int get_nth(struct node* head, int index);
 void delete_list(struct node** head_ref);
 int pop(struct node** head_ref);
-
-
+void insert_nth(struct node** list_ref, int index, int data);
 
 int main(int argc, char* argv[]){
+/*
   struct node* head = create_list(); 
   print_list(head);
-  list_length(head);
+  printf("list_length: %d\n", list_length(head));
 
   // exercise 1 ; Count()
   int count_func = Count(head, 3);
@@ -52,6 +52,7 @@ int main(int argc, char* argv[]){
     printf("index is invalid, outside 0, or length-1 exceeded\n"); 
   }
   printf("last node: %d\n", last_node);
+*/
 
   // exercise 3 ; delete_list()
   // checked with valgrind there's still 1 memory block not freed, meaning the head is NULL
@@ -61,26 +62,52 @@ int main(int argc, char* argv[]){
   }
   */
 
-  // exercise 4 ; pop()
-  int pop_func = pop(&head); 
-  printf("pop_func: %d\n", pop_func);
+  // exercise 4 ; pop() == done
+  /*int a = pop(&head); 
+  int b = pop(&head); 
+  int c = pop(&head); 
+  printf("pop_func a: %d\n", a);
+  printf("pop_func b: %d\n", b);
+  printf("pop_func c: %d\n", c);
   print_list(head);
-  
+  printf("list_length: %d\n", list_length(head));
+  if (list_length(head) == 0){
+    return -1;
+  }
+  */
+
+  // exercise 5; insert_nth()
+  struct node* list = NULL;
+  insert_nth(&list, 3, 13);
+  print_list(list);
 
   // free
-  link_free(head);
+//  link_free(head);
+  link_free(list);
   return 0;
 }
 
-int pop(struct node** head_ref){
-// allocate
-  struct node* current = (*head_ref)->next; 
-  int trunq = (*head_ref)->data;
-  
-// free head
-  free(*head_ref);
-// head->ref becomes head
+void insert_nth(struct node** list_ref, int index, int data){
+  struct node* new_node = malloc(sizeof(struct node));
 
+  if (*list_ref == NULL){
+    new_node->data = data;
+    new_node->next = *list_ref;
+    *list_ref = new_node;
+  }
+}
+
+int pop(struct node** head_ref){
+
+// allocate
+  struct node* new_head = (*head_ref)->next;
+  int trunq;
+  // get data
+  trunq = (*head_ref)->data;
+  // free head
+  free(*head_ref);
+  // head is next node
+  *head_ref = new_head;
  // return truncated data
  return trunq;
 
